@@ -1,5 +1,5 @@
 import { getUserByEmail } from "@/db/querys/user";
-import { getSecretKey } from "@/utils/jwt";
+import { generateJWTToken, getSecretKey } from "@/utils/jwt";
 import { SignJWT } from "jose";
 import { NextResponse } from "next/server";
 
@@ -28,23 +28,10 @@ export async function POST(req: Request) {
                 status: 401
             })
         }
-
-        const accessToken = await new SignJWT({
-            username: user.name,
-            id: user.id
-        }).setProtectedHeader({ alg: "HS256" })
-            .setIssuedAt()
-            .setExpirationTime("600s")
-            .sign(getSecretKey());
         
-        const refreshToken = await new SignJWT({
-            username: user.name,
-            id: user.id
-        }).setProtectedHeader({ alg: "HS256" })
-            .setIssuedAt()
-            .setExpirationTime("1 day")
-            .sign(getSecretKey());
-
+        const accessToken = await generateJWTToken(user.name, user.id, "600s");
+        const refreshToken = await generateJWTToken(user.name, user.id, "1 day");
+        
         const response = new NextResponse(JSON.stringify({ message: "Login successful" }), {
             status: 200
         })
