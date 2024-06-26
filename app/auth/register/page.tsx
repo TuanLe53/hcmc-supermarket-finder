@@ -1,12 +1,8 @@
 "use client";
 
+import { Coordinate } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
-
-interface Coordinate{
-    long: number,
-    lat: number
-}
 
 function RegisterPage() {
     const [userLocation, setUserLocation] = useState<Coordinate | null>(null);
