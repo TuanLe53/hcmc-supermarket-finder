@@ -35,7 +35,6 @@ function RegisterPage() {
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const name = formData.get("name");
-        const address = formData.get("address");
         const password = formData.get("password");
         const password2 = formData.get("password2");
 
@@ -43,7 +42,12 @@ function RegisterPage() {
             alert("Password don't match")
             return;
         }
-        
+
+        if (userLocation === null) {
+            alert("Please enter your location")
+            return;
+        }
+
         const res = await fetch("/api/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -51,7 +55,6 @@ function RegisterPage() {
                 email,
                 password,
                 name,
-                address,
                 location: [userLocation?.long, userLocation?.lat]
             })
         })
@@ -86,13 +89,7 @@ function RegisterPage() {
                     required
                 />
 
-                <label htmlFor="address">Address</label>
-                <input
-                    id="address"
-                    type="text"
-                    name="address"
-                    placeholder="Enter your address"
-                />
+                <label>Address</label>
                 <button onClick={getLocation}>GPS</button>
                 <p>{userLocation === null ? "Enter your location" : `${userLocation.lat}, ${userLocation.long}`}</p>
 
