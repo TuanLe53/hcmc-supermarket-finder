@@ -1,5 +1,6 @@
 import { getUserTrips } from "@/db/querys/wishlist";
 import { getAuthenticatedUserData } from "@/utils/cookie";
+import Link from "next/link";
 
 async function TripsPage() {
     const userData = await getAuthenticatedUserData();
@@ -15,16 +16,16 @@ async function TripsPage() {
                         <th>ID</th>
                         <th>Updated at</th>
                         <th>Status</th>
-                        <th>Function</th>
                     </tr>
                 </thead>
                 <tbody>
                     {trips.map((trip, index) => (
                         <tr key={index}>
-                            <td>{trip.id}</td>
+                            <td>
+                                <Link href={`/trips/${trip.id}`}>{trip.id}</Link>
+                            </td>
                             <td>{trip.updatedAt?.toLocaleDateString()}</td>
                             <td>{trip.status}</td>
-                            <td>{trip.status === "accepted" && <button type="button">Delete</button>}</td>
                         </tr>
                     ))}
                 </tbody>
