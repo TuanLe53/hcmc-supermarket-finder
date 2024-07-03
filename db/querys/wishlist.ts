@@ -63,3 +63,9 @@ export async function acceptWishlist(
             })
             .where(eq(WishList.id, id));
 };
+
+export async function getUserTrips(userID: string) {
+    return await db.select()
+        .from(WishList)
+        .where(eq(WishList.buyer, userID));
+}
