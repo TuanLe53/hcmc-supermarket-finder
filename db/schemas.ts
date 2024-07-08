@@ -34,7 +34,7 @@ export const WishList = pgTable("wishlist", {
 });
 
 export const Item = pgTable("wishlist_item", {
-    wishlist: uuid("wishlist_id").notNull().references(() => WishList.id),
+    wishlist: uuid("wishlist_id").notNull().references(() => WishList.id, {onDelete: "cascade"}),
     name: varchar("name", { length: 255 }).notNull(),
     quantity: varchar("quantity").notNull()
 })
