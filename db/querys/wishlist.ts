@@ -69,3 +69,18 @@ export async function getUserTrips(userID: string) {
         .from(WishList)
         .where(eq(WishList.buyer, userID));
 }
+
+export async function getUserWishlists(userID: string) {
+    return await db.select({
+        id: WishList.id,
+        status: WishList.status,
+        supermarket: Supermarket.name,
+        buyer: User.name,
+        createdAt: WishList.createAt,
+        updatedAt: WishList.updatedAt
+    })
+        .from(WishList)
+        .leftJoin(User, eq(WishList.buyer, User.id))
+        .leftJoin(Supermarket, eq(WishList.supermarket, Supermarket.id))
+        .where(eq(WishList.owner, userID));
+}
