@@ -43,3 +43,17 @@ export async function getNearbyWishlists(
         ))
         .limit(limit)
 };
+
+export async function getUserWishlistsForMap(userID:string) {
+    
+    return await db.select({
+        id: WishList.id,
+        status: WishList.status,
+        name: Supermarket.name,
+        address: Supermarket.address,
+        location: Supermarket.location,
+    })
+        .from(WishList)
+        .leftJoin(Supermarket, eq(Supermarket.id, WishList.supermarket))
+        .where(eq(WishList.owner, userID));
+}
