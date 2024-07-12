@@ -3,8 +3,14 @@ import { getWishlistItems } from "@/db/querys/wishlist";
 import { WishList } from "@/db/schemas";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import {validate as isUUID} from "uuid";
 
-async function TripDetail({ params }:{params:{id:string}}) {
+async function TripDetail({ params }: { params: { id: string } }) {
+    if (!isUUID(params.id)) {
+        redirect("/error")
+    }
+
     const wishlist = await db.query.WishList.findFirst({
         where: eq(WishList.id, params.id)
     })
