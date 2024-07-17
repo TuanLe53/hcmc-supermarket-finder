@@ -4,7 +4,7 @@ import { Coordinate, LocationMarker } from "@/types";
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
-import ControlPanel from "@/components/controlPanel";
+import Panel from "@/components/controlPanel";
 
 const Map = dynamic(() => import("@/components/map"), {
 	ssr: false,
@@ -19,8 +19,8 @@ function MapPage() {
 	const [flyToLocation, setFlyToLocation] = useState<[number, number] | null>(null);
 
 	return (
-		<main className="h-screen w-full grid grid-cols-4">
-			<div className="col-span-3">
+		<main className="w-full flex flex-row">
+			<div className="flex-grow">
 				<Map
 					setSelectedLocation={setSelectedLocation}
 					selectedLocation={selectedLocation}
@@ -30,15 +30,15 @@ function MapPage() {
 				/>
 			</div>
 
-			<div className="bg-orange-300">
-				<ControlPanel
+			<div className="control-panel-container flex-none bg-white">
+				<Panel
+					selectedLocation={selectedLocation}
 					markers={markers}
 					markerType={markerType}
-					setMarkers={setMarkers}
-					setMarkerType={setMarkerType}
-					selectedLocation={selectedLocation}
 					setSelectedLocation={setSelectedLocation}
 					setFlyToLocation={setFlyToLocation}
+					setMarkerType={setMarkerType}
+					setMarkers={setMarkers}
 				/>
 			</div>
 		</main>
