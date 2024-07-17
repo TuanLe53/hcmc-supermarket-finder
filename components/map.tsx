@@ -88,12 +88,15 @@ function DrawMarkers({markers, markerType}: Pick<MapProps, "markers" | "markerTy
                 </Marker>
             ))
         )
-    } else {
+    } else if(markerType === "detail"){
         return (
             markers.map((marker, index) => (
                 <Marker key={index} position={[marker.location[1], marker.location[0]]} icon={marker.type === "supermarket" ? marketIcon : wishlistIcon}>
                     <Popup>
                         <p>{marker.name}</p>
+                        {marker.type === "wishlist" &&
+                            <p>{marker.address}</p>
+                        }
                     </Popup>
                 </Marker>
             ))
