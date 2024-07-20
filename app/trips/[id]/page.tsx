@@ -24,14 +24,26 @@ async function TripDetail({ params }: { params: { id: string } }) {
         revalidatePath(`/trips/${wishlist?.id}`);
     }
 
+    const cancelWishlist = async () => {
+        "use server";
+        await db.update(WishList).set({ status: "pending", buyer: null, updatedAt: new Date() }).where(eq(WishList.id, wishlist?.id as string));
+    
+        redirect("/trips")
+    }
+
     return (
         <main>
             <p>{wishlist?.id}</p>
             <p>{wishlist?.status}</p>
-            {wishlist?.status === "accepted" &&            
+            {wishlist?.status === "accepted" &&
+            <>
                 <form action={fulfilledWishlist}>
                     <button type="submit">fulfilled</button>
                 </form>
+                <form action={cancelWishlist}>
+                    <button type="submit">Cancel</button>
+                </form>
+            </>     
             }
 
             <ul>
