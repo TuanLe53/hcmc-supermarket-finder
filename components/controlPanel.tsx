@@ -14,6 +14,9 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StoreIcon from '@mui/icons-material/Store';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { useRouter } from "next/navigation";
+import { getUserTrips } from "@/db/querys/wishlist";
 
 interface PanelProps{
     selectedLocation: Coordinate | null;
@@ -25,11 +28,24 @@ interface PanelProps{
     setMarkers: (args: LocationMarker[]) => void;
 }
 
-interface DialogProps{
+interface UserTripsProps extends PanelProps{
+    setShowUserData: (args: boolean) => void;
+    setSelectedMarker: (args: LocationMarker | null) => void;
+    setItems: (args: WishlistItem[]) => void;
+}
+
+interface DialogProps {
     isDialogOpen: boolean;
-    selectedMarker: string;
+    selectedMarker: LocationMarker | null;
     setDialogOpen: (args: boolean) => void;
-    setSelectedMarker: (args: string) => void;
+    setSelectedMarker: (args: LocationMarker | null) => void;
+}
+
+interface DisplayItemsProps extends PanelProps{
+    selectedMarker: LocationMarker | null;
+    setSelectedMarker: (args: LocationMarker | null) => void;
+    items: WishlistItem[];
+    setItems: (args: WishlistItem[]) => void;
 }
 
 function CreateWishlistDialog({
@@ -50,7 +66,7 @@ function CreateWishlistDialog({
     const closeDialog = () => {
         setNewItem({ name: "", quantity: "" });
         setItems([]);
-        setSelectedMarker("");
+        setSelectedMarker(null);
         setDialogOpen(false);
     }
 
@@ -72,7 +88,7 @@ function CreateWishlistDialog({
         }
 
         const body = {
-            supermarket: selectedMarker,
+            supermarket: selectedMarker?.id,
             items: items
         }
     
@@ -92,7 +108,7 @@ function CreateWishlistDialog({
         }
 
         setItems([]);
-        setSelectedMarker("");
+        setSelectedMarker(null);
         setDialogOpen(false);
         toast({
             title: "Success",
@@ -168,23 +184,27 @@ function CreateWishlistDialog({
 function DisplayItems({
     markers,
     markerType,
+    selectedMarker,
     setFlyToLocation,
     setMarkerType,
-    setMarkers
-}: Pick<PanelProps, "markers" | "setFlyToLocation" | "markerType" | "setMarkerType" | "setMarkers">
+    setMarkers,
+    setSelectedMarker,
+    items,
+    setItems
+}: Pick<DisplayItemsProps, "markers" | "setFlyToLocation" | "markerType" | "setMarkerType" | "setMarkers" | "selectedMarker" | "setSelectedMarker" | "items" | "setItems">
 ) {
     const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
-    const [selectedMarker, setSelectedMarker] = useState<string>("");
 
-    const [items, setItems] = useState<WishlistItem[]>([]);
+    const {toast} = useToast();
+    const router = useRouter();
 
-    const openDialog = (markerID: string) => {
-        setSelectedMarker(markerID)
+    const openDialog = (marker: LocationMarker) => {
+        setSelectedMarker(marker)
         setDialogOpen(true)
     }
 
     const acceptWishlist = async () => {
-        const res = await fetch(`/api/map/wishlists/${selectedMarker}`, {
+        const res = await fetch(`/api/map/wishlists/${selectedMarker?.id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
         })
@@ -194,19 +214,23 @@ function DisplayItems({
             console.log(data.error)
         };
 
-        alert("Success")
+        toast({
+            title: "Success",
+            description: "Wishlist accepted"
+        })
+
     }
 
-    const getWishlistDetail = async (wishlistID: string) => {
-        const res = await fetch(`api/map/wishlists/${wishlistID}`);
+    const getWishlistDetail = async (marker: LocationMarker) => {
+        const res = await fetch(`api/map/wishlists/${marker.id}`);
         const data = await res.json();
         
         if (res.status !== 200) {
             console.log(data.error)
         }
-        
-        console.log(data)
-        setSelectedMarker(wishlistID)
+        const wishlist = data.markers.filter((marker: LocationMarker) => marker.type === "wishlist")
+
+        setSelectedMarker(wishlist[0])
         setMarkerType("detail")
         setMarkers(data.markers)
         setItems(data.items)
@@ -228,7 +252,7 @@ function DisplayItems({
                                     <AddCircleIcon
                                         fontSize="large"
                                         className="text-sky-400 hover:text-sky-600"
-                                        onClick = {() => openDialog(marker.id)}
+                                        onClick = {() => openDialog(marker)}
                                     />
                                 </div>
                             </CardTitle>
@@ -258,7 +282,7 @@ function DisplayItems({
                                         {marker.name}
                                     </p>
                                     <button
-                                        onClick = {() => getWishlistDetail(marker.id)}
+                                        onClick = {() => getWishlistDetail(marker)}
                                     >
                                         Detail
                                     </button>
@@ -268,12 +292,6 @@ function DisplayItems({
                         </CardHeader>
                     </Card>
                 ))}
-                    {/* <WishlistDetailDialog
-                        isDialogOpen={isDialogOpen}
-                        setDialogOpen={setDialogOpen}
-                        selectedMarker={selectedMarker}
-                        setSelectedMarker={setSelectedMarker}
-                    /> */}
             </div>
         )
     } else if (markerType === "detail") {
@@ -283,15 +301,26 @@ function DisplayItems({
                     <p
                         className="font-semibold text-xs"
                     >
-                        {selectedMarker}
+                        {selectedMarker?.id}
                     </p>
-                    <button
+                    {selectedMarker?.status === "pending" &&                    
+                        <button
+                            type="button"
+                            className="p-1 rounded-md bg-sky-400 hover:bg-sky-500"
+                            onClick={acceptWishlist}
+                        >
+                            Accept
+                        </button>
+                    }
+                    {selectedMarker?.status === "accepted" &&
+                        <button
                         type="button"
                         className="p-1 rounded-md bg-sky-400 hover:bg-sky-500"
-                        onClick={acceptWishlist}
-                    >
-                        Accept
-                    </button>
+                        onClick={() => router.push(`/trips/${selectedMarker.id}`)}
+                        >
+                            Detail
+                        </button>
+                    }
                 </div>
                 {items.map((item, index) => (
                     <Card key={index} className="mb-1">
@@ -310,7 +339,77 @@ function DisplayItems({
     }
 }
 
-function UserWishlist({markers, setMarkers}: Pick<PanelProps, "markers" | "setMarkers">) {
+function UserTrips({
+    setMarkers,
+    setMarkerType,
+    setShowUserData,
+    setSelectedMarker,
+    setItems
+}: Pick<UserTripsProps, "setMarkers" | "setMarkerType" | "setShowUserData" | "setSelectedMarker" | "setItems">) {
+    const [trips, setTrips] = useState<Awaited<ReturnType<typeof getUserTrips>>>([]);
+    const router = useRouter();
+
+    const handleClick = async (wishlistID: string) => {
+        const res = await fetch(`api/map/wishlists/${wishlistID}`);
+        const data = await res.json();
+
+        if (res.status !== 200) {
+            console.log(data.error)
+        }
+        const wishlist = data.markers.filter((marker: LocationMarker) => marker.type === "wishlist")
+
+        setSelectedMarker(wishlist[0])
+        setMarkers(data.markers);
+        setMarkerType("detail");
+        setShowUserData(false);
+        setItems(data.items)
+    };
+    useEffect(() => {
+        const getUserTrips = async () => {
+            const res = await fetch("/api/trips");
+            const data = await res.json();
+
+            if (res.status !== 200) {
+                alert("Something went wrong")
+            }
+
+            console.log(data.trips)
+            setTrips(data.trips)
+        }
+
+        setMarkers([]);
+        getUserTrips();
+    }, [])
+    return (
+        <div>
+            <button
+                type="button"
+                onClick={() => router.push("trips")}
+            >
+                Detail
+            </button>
+            <ul>
+                {trips.map((trip, index) => (
+                    <li key={index}>
+                        <div>
+                            <p onClick={()=>handleClick(trip.id)}>{trip.owner}</p>
+                            <p>{trip.supermarket}</p>
+                        </div>
+                        <div>
+                            <button>
+                                <AssignmentIcon />
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+function UserWishlist({ markers, setMarkers }: Pick<PanelProps, "markers" | "setMarkers">) {
+    const router = useRouter();
+
     useEffect(() => {
         const getUserWishlist = async () => {
             const res = await fetch("/api/wishlists");
@@ -328,7 +427,12 @@ function UserWishlist({markers, setMarkers}: Pick<PanelProps, "markers" | "setMa
 
     return (
         <div>
-            <p>Hello World</p>
+            <button
+                type="button"
+                onClick={() => router.push("/wishlists")}
+            >
+                Detail
+            </button>
             {markers.map((wishlist, index) => (
                 <p key={index}>{wishlist.id}</p>
             ))}
@@ -346,6 +450,8 @@ export default function Panel({
     setMarkers
 }: PanelProps) {
     const [showUserData, setShowUserData] = useState<boolean>(false);
+    const [selectedMarker, setSelectedMarker] = useState<LocationMarker | null>(null);
+    const [items, setItems] = useState<WishlistItem[]>([]);
 
     const [limit, setLimit] = useState<number>(10);
     const [searchingRadius, setSearchingRadius] = useState<number>(10000); //10km
@@ -451,7 +557,13 @@ export default function Panel({
                         <UserWishlist markers={markers} setMarkers={setMarkers}/>
                     </TabsContent>
                     <TabsContent value="trips">
-                        Render trips
+                        <UserTrips
+                            setMarkers={setMarkers}
+                            setMarkerType={setMarkerType}
+                            setShowUserData={setShowUserData}
+                            setSelectedMarker={setSelectedMarker}
+                            setItems={setItems}
+                        />
                     </TabsContent>
                 </Tabs>
                 :
@@ -501,9 +613,13 @@ export default function Panel({
                         <DisplayItems
                         markers={markers}
                         setMarkers={setMarkers}
+                        items={items}
+                        setItems={setItems}
                         setFlyToLocation={setFlyToLocation}
                         markerType={markerType}
                         setMarkerType={setMarkerType}
+                        selectedMarker={selectedMarker}
+                        setSelectedMarker={setSelectedMarker}
                     />
                     }
                     
