@@ -29,26 +29,47 @@ export default function Login() {
     }
 
     return (
-        <main>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your user's email"
-                    required
-                />
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="password"
-                    required
-                />
-                <button type="submit">Login</button>
-            </form>
+        <main className="h-screen flex items-center justify-center">
+            <div
+                className="flex flex-col items-center h-4/5 xl:w-2/5 md:w-4/5"
+            >
+                <p
+                    className="text-center text-6xl font-medium mb-5"
+                >
+                    Login
+                </p>
+
+                <form
+                    className="flex flex-col w-11/12 p-2 bg-slate-200 rounded-xl"
+                    onSubmit={handleSubmit}
+                >
+                    <label htmlFor="email">Email</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your user's email"
+                        className="mb-3"
+                        required
+                    />
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        placeholder="password"
+                        required
+                    />
+                    <div>
+                        <button
+                            type="submit"
+                            className="w-20 mt-3 p-1 text-xl font-medium float-right rounded-md bg-sky-400 hover:bg-sky-500"
+                        >
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
         </main>
     )
 }
