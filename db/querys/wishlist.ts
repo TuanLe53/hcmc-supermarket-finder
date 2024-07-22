@@ -35,6 +35,7 @@ export async function getWishlistByID(id: string) {
         address: User.address,
         location: User.location,
         supermarketID: Supermarket.id,
+        status: WishList.status
     })
         .from(WishList)
         .leftJoin(User, eq(WishList.owner, User.id))
