@@ -66,7 +66,7 @@ export default function Login() {
                     >
                         <Link
                             href={"/auth/register"}
-                            className="mr-3"
+                            className="mr-3 text-blue-400"
                         >
                             Register
                         </Link>
