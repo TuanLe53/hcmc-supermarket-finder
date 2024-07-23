@@ -92,3 +92,9 @@ export async function getUserWishlists(userID: string) {
         .leftJoin(Supermarket, eq(WishList.supermarket, Supermarket.id))
         .where(eq(WishList.owner, userID));
 }
+
+export async function isWishlistExists(wishlistID: string) {
+    return db.query.WishList.findFirst({
+        where: eq(WishList.id, wishlistID)
+    })
+}
