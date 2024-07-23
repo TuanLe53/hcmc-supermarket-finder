@@ -34,11 +34,11 @@ export default function Login() {
             <div
                 className="flex flex-col items-center h-4/5 xl:w-2/5 md:w-4/5"
             >
-                <p
+                <h1
                     className="text-center text-6xl font-medium mb-5"
                 >
                     Login
-                </p>
+                </h1>
 
                 <form
                     className="flex flex-col w-11/12 p-2 bg-slate-200 rounded-xl"
