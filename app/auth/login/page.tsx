@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
@@ -60,10 +61,18 @@ export default function Login() {
                         placeholder="password"
                         required
                     />
-                    <div>
+                    <div
+                        className="mt-3 flex flex-row items-center justify-end"
+                    >
+                        <Link
+                            href={"/auth/register"}
+                            className="mr-3"
+                        >
+                            Register
+                        </Link>
                         <button
                             type="submit"
-                            className="w-20 mt-3 p-1 text-xl font-medium float-right rounded-md bg-sky-400 hover:bg-sky-500"
+                            className="w-20 p-1 text-xl font-medium rounded-md bg-sky-400 hover:bg-sky-500"
                         >
                             Login
                         </button>
