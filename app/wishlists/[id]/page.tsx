@@ -7,11 +7,15 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { validate as isUUID } from "uuid";
+import { format } from "date-fns";
+import { getSupermarketByID } from "@/db/querys/supermarket";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import InfoIcon from '@mui/icons-material/Info';
-import { format } from "date-fns";
-import { getSupermarketByID } from "@/db/querys/supermarket";
+import StoreIcon from '@mui/icons-material/Store';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 async function WishlistPage({ params }: { params: { id: string } }) {
     //Check if param is uuid
@@ -73,13 +77,55 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                     </form>
                 }
             </div>
-            <div
-                className="ml-36 w-4/5 border-2 border-red-300"
-            >
-                <h1>Supermarket</h1>
-                <p>{supermarket[0].name}</p>
-                <p>Address: {supermarket[0].address}</p>
+
+            <div className="flex flex-row space-x-4 ml-36 w-4/5">
+                <div>
+                    <Collapsible
+                        className="w-1/2 border-2 border-red-300"
+                    >
+                        <div className="flex flex-row justify-between">
+                            <h1><StoreIcon />Supermarket</h1>
+                            <CollapsibleTrigger>
+                                <ArrowDropDownIcon />
+                            </CollapsibleTrigger>
+                        </div>
+                        <CollapsibleContent>
+                            <p>{supermarket[0].name}</p>
+                            <p>Address: {supermarket[0].address}</p>
+                        </CollapsibleContent>
+                    </Collapsible>
+                </div>
+
+                <div>
+                    <Collapsible className="w-1/2 border-2 border-red-300">
+                        <div className="flex flex-row justify-between">
+                            <h1><AssignmentIcon />Items</h1>
+                            <CollapsibleTrigger>
+                                <ArrowDropDownIcon />
+                            </CollapsibleTrigger>
+                        </div>
+                        <CollapsibleContent>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {items.map((item, index) => (
+                                        <tr key={index}>
+                                            <td>{item.name}</td>
+                                            <td>{item.quantity}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </CollapsibleContent>
+                    </Collapsible>
+                </div>
             </div>
+
         </main>
     )
 }
