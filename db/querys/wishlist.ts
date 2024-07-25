@@ -76,7 +76,7 @@ export async function getUserTrips(userID: string) {
         .leftJoin(User, eq(WishList.owner, User.id))
         .leftJoin(Supermarket, eq(Supermarket.id, WishList.supermarket))
         .where(eq(WishList.buyer, userID));
-}
+};
 
 export async function getUserWishlists(userID: string) {
     return await db.select({
@@ -91,27 +91,27 @@ export async function getUserWishlists(userID: string) {
         .leftJoin(User, eq(WishList.buyer, User.id))
         .leftJoin(Supermarket, eq(WishList.supermarket, Supermarket.id))
         .where(eq(WishList.owner, userID));
-}
+};
 
 export async function isWishlistExists(wishlistID: string) {
     return db.query.WishList.findFirst({
         where: eq(WishList.id, wishlistID)
     })
-}
+};
 
 export async function deleteItemFromWishlist(
     wishlistID: string,
     name: string,
     quantity: string
 ) {
-    try {
-        await db.delete(Item)
-            .where(and(
-                eq(Item.name, name),
-                eq(Item.quantity, quantity),
-                eq(Item.wishlist, wishlistID)
-            ));
-    } catch (error) {
-        throw error
-    }
+    await db.delete(Item)
+        .where(and(
+            eq(Item.name, name),
+            eq(Item.quantity, quantity),
+            eq(Item.wishlist, wishlistID)
+        ));
+};
+
+export async function deleteWishlistByID(wishlistID: string) {
+    await db.delete(WishList).where(eq(WishList.id, wishlistID));
 }
