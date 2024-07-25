@@ -114,4 +114,16 @@ export async function deleteItemFromWishlist(
 
 export async function deleteWishlistByID(wishlistID: string) {
     await db.delete(WishList).where(eq(WishList.id, wishlistID));
+};
+
+export async function addItemToWishlist(
+    wishlistID: string,
+    name: string,
+    quantity: string
+) {
+    await db.insert(Item).values({
+        wishlist: wishlistID,
+        name: name,
+        quantity: quantity
+    })
 }
