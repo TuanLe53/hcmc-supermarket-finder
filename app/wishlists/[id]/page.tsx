@@ -77,16 +77,29 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                 </Link>
             </div>
             <div
-                className="ml-36 mb-4 w-4/5 border-2 border-red-300"
+                className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200"
             >
                 <h1><InfoIcon />Info</h1>
-                <p>ID: {wishlist.id}</p>
-                <p>Status: {wishlist.status}</p>
-                <p>Created at: {format(wishlist.createAt as Date, "dd/MM/yyyy")}</p>
-                <p>Updated at: {format(wishlist.updatedAt as Date, "dd/MM/yyyy")}</p>
+                <div
+                    className="flex flex-row space-x-28"
+                >
+                    <p>ID: {wishlist.id}</p>
+                    <p>Status: {wishlist.status}</p>
+                </div>
+                <div
+                    className="flex flex-row space-x-28"
+                >
+                    <p>Created at: {format(wishlist.createAt as Date, "dd/MM/yyyy")}</p>
+                    <p>Updated at: {format(wishlist.updatedAt as Date, "dd/MM/yyyy")}</p>
+                </div>
                 {wishlist.status === "pending" &&
                     <form action={deleteWishlist}>
-                        <button type="submit">DELETE</button>
+                        <button
+                            type="submit"
+                            className="text-red-500 font-semibold"
+                        >
+                            DELETE
+                        </button>
                     </form>
                 }
             </div>
