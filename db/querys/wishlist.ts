@@ -1,7 +1,7 @@
 import { WishlistItem } from "@/types";
 import { db } from "../db";
 import { Item, Supermarket, User, WishList } from "../schemas";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 export async function createWishListWithItems(
     owner: string,
@@ -97,4 +97,21 @@ export async function isWishlistExists(wishlistID: string) {
     return db.query.WishList.findFirst({
         where: eq(WishList.id, wishlistID)
     })
+}
+
+export async function deleteItemFromWishlist(
+    wishlistID: string,
+    name: string,
+    quantity: string
+) {
+    try {
+        await db.delete(Item)
+            .where(and(
+                eq(Item.name, name),
+                eq(Item.quantity, quantity),
+                eq(Item.wishlist, wishlistID)
+            ));
+    } catch (error) {
+        throw error
+    }
 }
