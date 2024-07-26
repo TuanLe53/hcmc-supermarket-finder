@@ -10,6 +10,17 @@ export async function getUserByEmail(email:string) {
     });
 };
 
+export async function getUserByID(id:string) {
+    return await db.query.User.findFirst({
+        columns: {
+            id: true,
+            name: true,
+            email: true
+        },
+        where: eq(User.id, id)
+    });
+};
+
 export async function createUser(
     name: string,
     email: string,
