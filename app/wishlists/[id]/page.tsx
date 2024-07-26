@@ -17,6 +17,7 @@ import StoreIcon from '@mui/icons-material/Store';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { getUserByID } from "@/db/querys/user";
 
 
 async function WishlistPage({ params }: { params: { id: string } }) {
@@ -39,6 +40,12 @@ async function WishlistPage({ params }: { params: { id: string } }) {
     const userData = await getAuthenticatedUserData();
     if (wishlist.owner !== userData?.id) {
         redirect("/unauthorized")
+    }
+
+    //Get buyer if wishlist.status !== pending
+    let buyer;
+    if (wishlist.status !== "pending") {
+        buyer = await getUserByID(wishlist.buyer as string);
     }
 
     const supermarket = await getSupermarketByID(wishlist.supermarket);
@@ -103,6 +110,15 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                     </form>
                 }
             </div>
+
+            {wishlist.status !== "pending" &&            
+                <div className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200">
+                    <h1>Buyer</h1>
+                    <p>Name: {buyer?.name}</p>
+                    <p>Email: {buyer?.email}</p>
+                    <p>Phone: +098765431</p>
+                </div>
+            }
 
             <div className="flex flex-row space-x-4 ml-36 w-4/5">
                 <div className="w-1/2 p-2 h-fit rounded-xl bg-slate-200">
