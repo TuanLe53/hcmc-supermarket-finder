@@ -284,7 +284,7 @@ function DisplayItems({
                                     <button
                                         onClick = {() => getWishlistDetail(marker)}
                                     >
-                                        Detail
+                                        Details
                                     </button>
                                 </div>
                             </CardTitle>
@@ -318,7 +318,7 @@ function DisplayItems({
                         className="p-1 rounded-md bg-sky-400 hover:bg-sky-500"
                         onClick={() => router.push(`/trips/${selectedMarker.id}`)}
                         >
-                            Detail
+                            Details
                         </button>
                     }
                 </div>
@@ -384,9 +384,12 @@ function UserTrips({
         <div>
             <button
                 type="button"
+                className="w-full flex justify-end"
                 onClick={() => router.push("trips")}
             >
-                Detail
+                <p className="text-sky-600 mr-3 hover:underline">
+                    Details
+                </p>
             </button>
             <ul>
                 {trips.map((trip, index) => (
@@ -407,7 +410,7 @@ function UserTrips({
     )
 }
 
-function UserWishlist({ markers, setMarkers }: Pick<PanelProps, "markers" | "setMarkers">) {
+function UserWishlist({ markers, setMarkers, setFlyToLocation }: Pick<PanelProps, "markers" | "setMarkers" | "setFlyToLocation">) {
     const router = useRouter();
 
     useEffect(() => {
@@ -429,12 +432,22 @@ function UserWishlist({ markers, setMarkers }: Pick<PanelProps, "markers" | "set
         <div>
             <button
                 type="button"
+                className="w-full flex justify-end"
                 onClick={() => router.push("/wishlists")}
             >
-                Detail
+                <p className="text-sky-600 mr-3 hover:underline">
+                    Details
+                </p>
             </button>
             {markers.map((wishlist, index) => (
-                <p key={index}>{wishlist.id}</p>
+                <div
+                    key={index}
+                    className="p-2 bg-slate-300 rounded-md m-2 hover:cursor-pointer"
+                    onClick={() => setFlyToLocation([wishlist.location[0], wishlist.location[1]])}
+                >
+                    <p>{wishlist.id}</p>
+                    <p className="text-right">Status: {wishlist.status}</p>
+                </div>
             ))}
         </div>
     )
@@ -554,7 +567,7 @@ export default function Panel({
                         <TabsTrigger value="trips" className="w-3/6">My Trips</TabsTrigger>
                     </TabsList>
                     <TabsContent value="wishlists">
-                        <UserWishlist markers={markers} setMarkers={setMarkers}/>
+                        <UserWishlist markers={markers} setMarkers={setMarkers} setFlyToLocation={setFlyToLocation}/>
                     </TabsContent>
                     <TabsContent value="trips">
                         <UserTrips
