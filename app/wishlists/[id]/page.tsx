@@ -79,7 +79,7 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                     href={"/wishlists"}
                     className="hover:underline"
                 >
-                    <ArrowBackIosNewIcon />
+                    <ArrowBackIosNewIcon fontSize="small"/>
                     Wishlists
                 </Link>
             </div>
