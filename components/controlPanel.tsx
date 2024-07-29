@@ -393,16 +393,12 @@ function UserTrips({
             </button>
             <ul>
                 {trips.map((trip, index) => (
-                    <li key={index}>
-                        <div>
-                            <p onClick={()=>handleClick(trip.id)}>{trip.owner}</p>
-                            <p>{trip.supermarket}</p>
-                        </div>
-                        <div>
-                            <button>
-                                <AssignmentIcon />
-                            </button>
-                        </div>
+                    <li
+                        key={index}
+                        className="p-2 bg-slate-300 rounded-md m-2"
+                    >
+                        <p onClick={()=>handleClick(trip.id)}>{trip.owner}</p>
+                        <p>{trip.supermarket}</p>
                     </li>
                 ))}
             </ul>
@@ -439,16 +435,18 @@ function UserWishlist({ markers, setMarkers, setFlyToLocation }: Pick<PanelProps
                     Details
                 </p>
             </button>
-            {markers.map((wishlist, index) => (
-                <div
-                    key={index}
-                    className="p-2 bg-slate-300 rounded-md m-2 hover:cursor-pointer"
-                    onClick={() => setFlyToLocation([wishlist.location[0], wishlist.location[1]])}
-                >
-                    <p>{wishlist.id}</p>
-                    <p className="text-right">Status: {wishlist.status}</p>
-                </div>
-            ))}
+            <ul>
+                {markers.map((wishlist, index) => (
+                    <li
+                        key={index}
+                        className="p-2 bg-slate-300 rounded-md m-2 hover:cursor-pointer"
+                        onClick={() => setFlyToLocation([wishlist.location[0], wishlist.location[1]])}
+                    >
+                        <p>{wishlist.id}</p>
+                        <p className="text-right">Status: {wishlist.status}</p>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
