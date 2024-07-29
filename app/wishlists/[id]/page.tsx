@@ -18,6 +18,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { getUserByID } from "@/db/querys/user";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 
 async function WishlistPage({ params }: { params: { id: string } }) {
@@ -100,14 +101,36 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                     <p>Updated at: {format(wishlist.updatedAt as Date, "dd/MM/yyyy")}</p>
                 </div>
                 {wishlist.status === "pending" &&
-                    <form action={deleteWishlist}>
-                        <button
-                            type="submit"
-                            className="text-red-500 font-semibold"
-                        >
-                            DELETE
-                        </button>
-                    </form>
+                    <div className="flex justify-end">                    
+                        <Dialog>
+                            <DialogTrigger className="text-red-500 font-semibold">
+                                DELETE
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Delete wishlist</DialogTitle>
+                                    <DialogDescription>
+                                        Are you sure you want to delete this wishlist?
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <DialogClose
+                                        className="p-1 rounded-md bg-gray-200 hover:bg-gray-300"
+                                    >
+                                        Close
+                                    </DialogClose>
+                                    <form action={deleteWishlist}>
+                                        <button
+                                            type="submit"
+                                            className="p-1 rounded-md bg-red-500 hover:bg-red-600 text-white"
+                                        >
+                                            YES
+                                        </button>
+                                    </form>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
                 }
             </div>
 
