@@ -17,6 +17,7 @@ import StoreIcon from '@mui/icons-material/Store';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ItemTable from "@/components/itemTable";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 async function TripDetail({ params }: { params: { id: string } }) {
     //Check if param is uuid
@@ -76,25 +77,62 @@ async function TripDetail({ params }: { params: { id: string } }) {
                     <p>Status: {wishlist.status}</p>
                     <p>Accepted at: {format(wishlist.updatedAt as Date, "dd/MM/yyyy")}</p>
                 </div>
-                {wishlist.status === "accepted" &&                
-                    <div className="flex flex-row justify-end space-x-1">
-                        <form action={fulfilledWishlist}>
-                            <button
-                                type="submit"
-                                className="p-1 rounded-md bg-sky-400 hover:bg-sky-500"
-                            >
-                                Fulfilled
-                            </button>
-                        </form>
-                        <form action={cancelWishlist}>
-                            <button
-                                type="submit"
-                                className="p-1 rounded-md bg-sky-400 hover:bg-sky-500"
-                            >
+                {wishlist.status === "accepted" &&       
+                    <div className="flex justify-end space-x-2">
+                        <Dialog>
+                            <DialogTrigger className="text-red-500 font-semibold">
                                 Cancel
-                            </button>
-                        </form>
-                    </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Cancel Trip</DialogTitle>
+                                    <DialogDescription>
+                                        Are you sure you want to cancel this trip?
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <DialogClose className="p-1 rounded-md bg-gray-200 hover:bg-gray-300">
+                                        Close
+                                    </DialogClose>
+                                    <form action={cancelWishlist}>
+                                        <button
+                                            type="submit"
+                                            className="p-1 rounded-md bg-red-500 hover:bg-red-600 text-white"
+                                        >
+                                            Yes
+                                        </button>
+                                    </form>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>    
+
+                        <Dialog>
+                            <DialogTrigger className="text-sky-500 font-semibold">
+                                Fulfilled
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Fulfilled Wishlist</DialogTitle>
+                                    <DialogDescription>
+                                        Are you sure you fulfilled this wishlist?
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                    <DialogClose className="p-1 rounded-md bg-gray-200 hover:bg-gray-300">
+                                        Close
+                                    </DialogClose>
+                                    <form action={fulfilledWishlist}>
+                                        <button
+                                            type="submit"
+                                            className="p-1 rounded-md bg-sky-500 hover:bg-sky-600 text-white"
+                                        >
+                                            Yes
+                                        </button>
+                                    </form>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>    
+                    </div>    
                 }
             </div>
 
