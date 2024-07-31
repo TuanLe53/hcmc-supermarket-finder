@@ -96,7 +96,7 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                     className="flex flex-row space-x-28"
                 >
                     <p>ID: {wishlist.id}</p>
-                    <p>Status: {wishlist.status}</p>
+                    <p>Status: <span className={wishlist.status === "accepted" ? "text-orange-500 font-semibold" : wishlist.status === "fulfilled" ? "text-emerald-500 font-semibold" : "font-semibold"}>{wishlist.status.toUpperCase()}</span></p>
                 </div>
                 <div
                     className="flex flex-row space-x-28"
