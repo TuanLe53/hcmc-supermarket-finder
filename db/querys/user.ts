@@ -15,7 +15,8 @@ export async function getUserByID(id:string) {
         columns: {
             id: true,
             name: true,
-            email: true
+            email: true,
+            address: true
         },
         where: eq(User.id, id)
     });
