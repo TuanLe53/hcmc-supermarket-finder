@@ -17,6 +17,7 @@ import StoreIcon from '@mui/icons-material/Store';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { getUserByID } from "@/db/querys/user";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
@@ -87,7 +88,10 @@ async function WishlistPage({ params }: { params: { id: string } }) {
             <div
                 className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200"
             >
-                <h1><InfoIcon />Info</h1>
+                <div className="pb-1 border-b border-black flex flex-row items-center">
+                    <InfoIcon fontSize="medium"/>
+                    <h1 className="ml-1 font-bold text-2xl">INFO</h1>
+                </div>
                 <div
                     className="flex flex-row space-x-28"
                 >
@@ -136,7 +140,10 @@ async function WishlistPage({ params }: { params: { id: string } }) {
 
             {wishlist.status !== "pending" &&            
                 <div className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200">
-                    <h1>Buyer</h1>
+                    <div className="pb-1 border-b border-black flex flex-row items-center">
+                        <AccountCircleIcon fontSize="medium"/>
+                        <h1 className="ml-1 font-bold text-2xl">Buyer</h1>
+                    </div>
                     <p>Name: {buyer?.name}</p>
                     <p>Email: {buyer?.email}</p>
                     <p>Phone: +098765431</p>
@@ -146,8 +153,11 @@ async function WishlistPage({ params }: { params: { id: string } }) {
             <div className="flex flex-row space-x-4 ml-36 w-4/5">
                 <div className="w-1/2 p-2 h-fit rounded-xl bg-slate-200">
                     <Collapsible>
-                        <div className="flex flex-row justify-between">
-                            <h1><StoreIcon />Supermarket</h1>
+                        <div className="flex flex-row justify-between border-b border-black">
+                            <div className="pb-1 flex flex-row items-center">
+                                <StoreIcon fontSize="medium"/>
+                                <h1 className="ml-1 font-bold text-2xl">Supermarket</h1>
+                            </div>
                             <CollapsibleTrigger>
                                 <ArrowDropDownIcon />
                             </CollapsibleTrigger>
@@ -161,8 +171,11 @@ async function WishlistPage({ params }: { params: { id: string } }) {
 
                 <div className="w-1/2 p-2 h-fit rounded-xl bg-slate-200">
                     <Collapsible>
-                        <div className="flex flex-row justify-between">
-                            <h1><AssignmentIcon />Items</h1>
+                        <div className="flex flex-row justify-between border-b border-black">
+                            <div className="pb-1 flex flex-row items-center">
+                                <AssignmentIcon fontSize="medium"/>
+                                <h1 className="ml-1 font-bold text-2xl">Items</h1>
+                            </div>
                             <CollapsibleTrigger>
                                 <ArrowDropDownIcon />
                             </CollapsibleTrigger>
