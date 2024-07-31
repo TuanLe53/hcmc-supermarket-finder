@@ -27,14 +27,14 @@ export default function ItemTable({items, wishlistID, wishlistStatus}:ItemTableP
     }
     return (
         <table
-            className="w-full border-collapse border-4 border-black"
+            className="w-full border-collapse"
         >
             <thead>
-                <tr>
-                    <th className="text-left border border-black">Name</th>
-                    <th className="text-left border border-black">Quantity</th>
+                <tr className="border-b border-black">
+                    <th className="text-left">Name</th>
+                    <th className="text-left">Quantity</th>
                     {wishlistStatus === "pending" &&
-                        <th className="text-left border border-black">Delete</th>
+                        <th className="text-center text-red-600">Delete</th>
                     }
                 </tr>
             </thead>
@@ -42,20 +42,20 @@ export default function ItemTable({items, wishlistID, wishlistStatus}:ItemTableP
                 {items.map((item, index) => (
                     <tr key={index}>
                         <td
-                            className="text-left border border-black"
+                            className="text-left border-b border-black"
                         >
                             {item.name}
                         </td>
                         <td
-                            className="text-left border border-black"
+                            className="text-left border-b border-black"
                         >
                             {item.quantity}
                         </td>
                         {wishlistStatus === "pending" &&
-                            <td className="text-left border border-black">
+                            <td className="text-center border-b border-black">
                                 <form action={deleteItem.bind(null, item.name, item.quantity)}>
                                     <button type="submit">
-                                        <DeleteIcon />
+                                        <DeleteIcon className="text-red-600"/>
                                     </button>
                                 </form>
                             </td>
