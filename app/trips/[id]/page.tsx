@@ -17,7 +17,10 @@ import StoreIcon from '@mui/icons-material/Store';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ItemTable from "@/components/itemTable";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { getUserByID } from "@/db/querys/user";
 
 async function TripDetail({ params }: { params: { id: string } }) {
     //Check if param is uuid
@@ -43,7 +46,7 @@ async function TripDetail({ params }: { params: { id: string } }) {
         redirect("/unauthorized")
     }
 
-    
+    const owner = await getUserByID(wishlist.owner);
 
     const items = await getWishlistItems(wishlist.id);
     const supermarket = await getSupermarketByID(wishlist.supermarket);
@@ -134,6 +137,14 @@ async function TripDetail({ params }: { params: { id: string } }) {
                         </Dialog>    
                     </div>    
                 }
+            </div>
+
+            <div className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200">
+                <h1><AccountCircleIcon />Owner</h1>
+                <p>Name: {owner?.name}</p>
+                <p>Email: {owner?.email}</p>
+                <p>Address: {owner?.address}</p>
+                <p>Phone: +098765431</p>
             </div>
 
             <div className="flex flex-row space-x-4 ml-36 w-4/5">
