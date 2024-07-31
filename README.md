@@ -13,10 +13,12 @@ A full-stack Supermarket Finder app built with NextJs, PostgreSQL and Drizzle-OR
 ![Image of my wishlists](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-26%20201948.png)
 
 ###### Wishlist Details
-![Image of wishlist detail](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-26%20203043.png)
-![Image of wishlist detail](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-26%20203104.png)
+![Image of wishlist detail](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-31%20185928.png)
+![Image of wishlist detail](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-31%20190806.png)
 
-###### 
+###### Trip Details
+![Image of trip detail](https://github.com/TuanLe53/hcmc-supermarket-finder/blob/main/screenshots/Screenshot%202024-07-31%20182137.png)
+
 
 ## Built With
 - Next.js
