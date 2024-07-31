@@ -10,6 +10,8 @@ import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {validate as isUUID} from "uuid";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { getUserByID } from "@/db/querys/user";
 
 import ArrowBackIosNew from "@mui/icons-material/ArrowBackIosNew";
 import InfoIcon from '@mui/icons-material/Info';
@@ -19,8 +21,6 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import ItemTable from "@/components/itemTable";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { getUserByID } from "@/db/querys/user";
 
 async function TripDetail({ params }: { params: { id: string } }) {
     //Check if param is uuid
@@ -74,7 +74,10 @@ async function TripDetail({ params }: { params: { id: string } }) {
                 </Link>
             </div>
             <div className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200">
-                <h1><InfoIcon />Info</h1>
+                <div className="pb-1 border-b border-black flex flex-row items-center">
+                    <InfoIcon fontSize="medium"/>
+                    <h1 className="ml-1 font-bold text-2xl">INFO</h1>
+                </div>
                 <div className="flex flex-row space-x-28">
                     <p>ID: {wishlist.id}</p>
                     <p>Status: {wishlist.status}</p>
@@ -140,7 +143,10 @@ async function TripDetail({ params }: { params: { id: string } }) {
             </div>
 
             <div className="ml-36 mb-4 w-4/5 p-2 rounded-xl bg-slate-200">
-                <h1><AccountCircleIcon />Owner</h1>
+                <div className="pb-1 border-b border-black flex flex-row items-center">
+                    <AccountCircleIcon fontSize="medium"/>
+                    <h1 className="ml-1 font-bold text-2xl">Owner</h1>
+                </div>
                 <p>Name: {owner?.name}</p>
                 <p>Email: {owner?.email}</p>
                 <p>Address: {owner?.address}</p>
@@ -150,8 +156,11 @@ async function TripDetail({ params }: { params: { id: string } }) {
             <div className="flex flex-row space-x-4 ml-36 w-4/5">
                 <div className="w-1/2 p-2 h-fit rounded-xl bg-slate-200">
                     <Collapsible>
-                        <div className="flex flex-row justify-between">
-                            <h1><StoreIcon />Supermarket</h1>
+                        <div className="flex flex-row justify-between border-b border-black">
+                            <div className="pb-1 flex flex-row items-center">
+                                <StoreIcon fontSize="medium"/>
+                                <h1 className="ml-1 font-bold text-2xl">Supermarket</h1>
+                            </div>
                             <CollapsibleTrigger>
                                 <ArrowDropDownIcon />
                             </CollapsibleTrigger>
@@ -165,8 +174,11 @@ async function TripDetail({ params }: { params: { id: string } }) {
 
                 <div className="w-1/2 p-2 h-fit rounded-xl bg-slate-200">
                     <Collapsible>
-                        <div className="flex flex-row justify-between">
-                            <h1><AssignmentIcon />Items</h1>
+                        <div className="flex flex-row justify-between border-b border-black">
+                            <div className="pb-1 flex flex-row items-center">
+                                <AssignmentIcon fontSize="medium"/>
+                                <h1 className="ml-1 font-bold text-2xl">Items</h1>
+                            </div>
                             <CollapsibleTrigger>
                                 <ArrowDropDownIcon />
                             </CollapsibleTrigger>
