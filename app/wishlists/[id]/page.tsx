@@ -188,6 +188,7 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                             />
 
                             {/* Add Item to wishlist */}
+                            {wishlist.status === "pending" &&
                             <Collapsible className="mt-1">
                                 <div className="flex justify-end">
                                     <CollapsibleTrigger>
@@ -230,6 +231,8 @@ async function WishlistPage({ params }: { params: { id: string } }) {
                                     </form>
                                 </CollapsibleContent>
                             </Collapsible>
+                            
+                            }
 
                         </CollapsibleContent>
                     </Collapsible>
