@@ -1,8 +1,32 @@
+import { getAuthenticatedUserData } from "@/utils/cookie";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+	let isLogin: boolean;
+	let user;
+	try {
+		user = await getAuthenticatedUserData();
+		isLogin = true;
+	} catch (error) {
+		isLogin = false;
+	}
+	
 	return (
-		<main className="h-screen flex justify-center">
+		<main className="h-screen flex justify-center relative">
+			<div className="absolute top-5 right-5">
+				{isLogin
+					?
+					<div className="flex flex-row">
+						<p className="border-r border-black pr-1">{user?.username as string}</p>
+						<Link href={"/profile"} className="pl-1 hover:underline">Profile</Link>
+					</div>
+					:
+					<>					
+						<Link href={"/auth/login"} className="border-r border-black pr-1 hover:underline">Login</Link>
+						<Link href={"/auth/register"} className="pl-1 hover:underline">Register</Link>
+					</>
+				}
+			</div>
 			<div className="mt-20">
 				<h1 className="text-center text-4xl mb-1">Welcome</h1>
 				<Link href={"/map"}>
