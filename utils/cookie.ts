@@ -5,10 +5,6 @@ export async function getAuthenticatedUserData() {
     const cookieStore = cookies();
     const token = cookieStore.get("accessToken")?.value;
 
-    try {
-        const decode = await verifyJWT(token as string);
-        return decode;
-    } catch (error) {
-        throw error
-    }
+    const decode = await verifyJWT(token as string);
+    return decode;
 }

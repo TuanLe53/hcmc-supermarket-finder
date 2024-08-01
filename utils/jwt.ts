@@ -10,12 +10,8 @@ export function getSecretKey():Uint8Array{
 }
 
 export async function verifyJWT(token: string):Promise<JWTPayload|null> {
-    try {
-        const { payload } = await jwtVerify(token, getSecretKey());
-        return payload
-    } catch (error) {
-        throw error
-    }
+    const { payload } = await jwtVerify(token, getSecretKey());
+    return payload
 }
 
 export async function generateJWTToken(
