@@ -43,3 +43,10 @@ export async function createUser(
         throw error
     }
 }
+
+export async function updateUserAddress(
+    userID: string,
+    address: string
+){
+    await db.update(User).set({address: address}).where(eq(User.id, userID))
+}
