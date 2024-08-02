@@ -13,7 +13,7 @@ interface DialogProps{
 
 export default function UpdateDialog({ updateField, action }: DialogProps) {
     const [open, setOpen] = useState(false);
-    console.log(updateField)
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
