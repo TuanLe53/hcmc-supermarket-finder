@@ -50,3 +50,9 @@ export async function updateUserAddress(
 ){
     await db.update(User).set({address: address}).where(eq(User.id, userID))
 }
+export async function updateUsername(
+    userID: string,
+    name: string
+){
+    await db.update(User).set({name: name}).where(eq(User.id, userID))
+}
