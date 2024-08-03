@@ -26,7 +26,7 @@ export default function UpdateDialog({ updateField, action }: DialogProps) {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger><EditIcon /></DialogTrigger>
+            <DialogTrigger><EditIcon fontSize="small"/></DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Change your {updateField}</DialogTitle>
