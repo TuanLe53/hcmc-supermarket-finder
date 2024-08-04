@@ -33,7 +33,7 @@ export default async function ProfilePage(){
                         <Avatar className="h-20 w-20">
                             <AvatarImage src="" />
                             <AvatarFallback className="bg-transparent">
-                                <AccountCircleIcon className="h-full w-full" />
+                                <AccountCircleIcon sx={{fontSize: 80}}/>
                             </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-row gap-1 justify-between">
