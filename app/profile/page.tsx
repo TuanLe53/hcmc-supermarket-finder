@@ -10,6 +10,17 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { permanentRedirect } from "next/navigation";
+
+async function logout() {
+    "use server";
+    const cookieStore = cookies();
+    cookieStore.delete("accessToken");
+    cookieStore.delete("refreshToken");
+    
+    permanentRedirect("/auth/login")
+}
 
 export default async function ProfilePage(){
     const userFromToken = await getAuthenticatedUserData();
@@ -83,12 +94,15 @@ export default async function ProfilePage(){
                             <p>Wishlists</p>
                         </button>
                     </Link>
-                    <div>
-                        <button className="w-48 h-48 border border-black rounded-xl">
+                    <form action={logout}>
+                        <button
+                            className="w-48 h-48 border border-black rounded-xl"
+                            type="submit"
+                        >
                             <LogoutIcon sx={{ fontSize: 70 }} />
                             <p>Logout</p>
                         </button>
-                    </div>
+                    </form>
                 </div>
                 
             </div>
