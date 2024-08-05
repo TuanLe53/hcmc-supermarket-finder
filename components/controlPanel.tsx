@@ -14,7 +14,6 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StoreIcon from '@mui/icons-material/Store';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useRouter } from "next/navigation";
 import { getUserTrips } from "@/db/querys/wishlist";
 
