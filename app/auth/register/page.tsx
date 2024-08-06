@@ -67,12 +67,12 @@ function RegisterPage() {
     return (
         <main className="h-screen flex items-center justify-center">
             <div
-                className="flex flex-col items-center h-4/5 xl:w-2/5 md:w-4/5"
+                className="flex flex-col items-center h-4/5 w-4/5 md:w-2/5"
             >
                 <h1
                     className="text-center text-6xl font-medium mb-5"
                 >
-                    Register page
+                    Register
                 </h1>
 
                 <form
