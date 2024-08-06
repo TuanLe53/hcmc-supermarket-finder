@@ -9,7 +9,7 @@ export interface LocationMarker{
     address: string;
     location: [number, number];
     type?: "wishlist" | "supermarket";
-    status?: string; 
+    status?: string;
 }
 
 export interface WishlistItem{
