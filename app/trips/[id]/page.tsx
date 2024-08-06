@@ -80,7 +80,7 @@ async function TripDetail({ params }: { params: { id: string } }) {
                 </div>
                 <div className="flex flex-row space-x-28">
                     <p>ID: {wishlist.id}</p>
-                    <p>Status: {wishlist.status}</p>
+                    <p>Status: <span className={wishlist.status === "accepted" ? "text-orange-500 font-semibold" : "text-emerald-500 font-semibold"}>{wishlist.status.toUpperCase()}</span></p>
                     <p>Accepted at: {format(wishlist.updatedAt as Date, "dd/MM/yyyy")}</p>
                 </div>
                 {wishlist.status === "accepted" &&       
