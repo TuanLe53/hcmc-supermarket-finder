@@ -75,28 +75,28 @@ export default async function ProfilePage(){
                     </div>
                 </div>
             
-                <div className="w-2/5 grid grid-cols-3 gap-5">
+                <div className="w-4/5 md:w-2/5 xl:grid xl:grid-cols-3 gap-5 flex flex-col">
                     <Link href={"/map"}  className="shadow-xl">
-                         <button className="w-48 h-48 border border-black rounded-xl">
+                         <button className="w-full xl:w-48 xl:h-48 flex items-center border border-black rounded-xl">
                             <MapIcon sx={{fontSize: 70}} />
                             <p>Map</p>
                         </button>
                     </Link>
                     <Link href={"/trips"} className="shadow-xl">
-                        <button className="w-48 h-48 border border-black rounded-xl">
+                        <button className="w-full xl:w-48 xl:h-48 flex items-center border border-black rounded-xl">
                             <ShoppingCartIcon sx={{ fontSize: 70 }} />
                             <p>Trips</p>
                         </button>
                     </Link>
                     <Link href={"/wishlists"} className="shadow-xl">
-                        <button className="w-48 h-48 border border-black rounded-xl">
+                        <button className="w-full xl:w-48 xl:h-48 flex items-center border border-black rounded-xl">
                             <AssignmentIcon sx={{ fontSize: 70 }} />
                             <p>Wishlists</p>
                         </button>
                     </Link>
                     <form action={logout} className="shadow-xl">
                         <button
-                            className="w-48 h-48 border border-black rounded-xl"
+                            className="w-full xl:w-48 xl:h-48 flex items-center border border-black rounded-xl"
                             type="submit"
                         >
                             <LogoutIcon sx={{ fontSize: 70 }} />
