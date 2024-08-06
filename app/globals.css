@@ -102,3 +102,12 @@
     transform: translateY(-1rem);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .control-panel-container{
+    width: 100vw;
+  }
+  .control-panel-body{
+    width: 100vw;
+  }
+}
