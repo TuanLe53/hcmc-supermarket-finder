@@ -76,25 +76,25 @@ export default async function ProfilePage(){
                 </div>
             
                 <div className="w-2/5 grid grid-cols-3 gap-5">
-                    <Link href={"/map"}>
+                    <Link href={"/map"}  className="shadow-xl">
                          <button className="w-48 h-48 border border-black rounded-xl">
                             <MapIcon sx={{fontSize: 70}} />
                             <p>Map</p>
                         </button>
                     </Link>
-                    <Link href={"/trips"}>
+                    <Link href={"/trips"} className="shadow-xl">
                         <button className="w-48 h-48 border border-black rounded-xl">
                             <ShoppingCartIcon sx={{ fontSize: 70 }} />
                             <p>Trips</p>
                         </button>
                     </Link>
-                    <Link href={"/wishlists"}>
+                    <Link href={"/wishlists"} className="shadow-xl">
                         <button className="w-48 h-48 border border-black rounded-xl">
                             <AssignmentIcon sx={{ fontSize: 70 }} />
                             <p>Wishlists</p>
                         </button>
                     </Link>
-                    <form action={logout}>
+                    <form action={logout} className="shadow-xl">
                         <button
                             className="w-48 h-48 border border-black rounded-xl"
                             type="submit"
