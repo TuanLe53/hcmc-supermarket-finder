@@ -70,7 +70,8 @@ export async function getUserTrips(userID: string) {
         id: WishList.id,
         ownerID: WishList.owner,
         owner: User.name,
-        supermarket: Supermarket.name
+        supermarket: Supermarket.name,
+        location: Supermarket.location
     })
         .from(WishList)
         .leftJoin(User, eq(WishList.owner, User.id))
