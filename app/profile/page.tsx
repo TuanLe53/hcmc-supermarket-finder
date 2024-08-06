@@ -44,7 +44,7 @@ export default async function ProfilePage(){
             className="h-screen"
         >
             <div className="flex flex-col items-center gap-3">
-                <div className="flex h-52 w-2/5 mt-10 p-2 bg-slate-300 rounded-2xl">
+                <div className="flex flex-col md:flex-row items-center h-52 w-4/5 md:w-2/5 mt-10 p-2 bg-slate-300 rounded-2xl">
                     <div className="flex flex-col justify-center items-center w-1/4">
                         <Avatar className="h-20 w-20">
                             <AvatarImage src="" />
